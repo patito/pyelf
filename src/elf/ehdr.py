@@ -8,12 +8,6 @@ class Ehdr(object):
 
     """
 
-    E_TYPE = 16
-    E_MACHINE = 18
-    E_VERSION = 20
-    E_EHSIZE = 40
-    E_PHENTSIZE = 42
-
     def __init__(self):
         self.__elf = LoadELFFile(None)
 
@@ -23,23 +17,23 @@ class Ehdr(object):
 
     @property
     def e_machine(self):
-        return self.__elf.binary[self.E_MACHINE]    
+        return binascii.hexlify(str(self.__elf.binary[19:17:-1]))
     
     @property
     def e_version(self):
-        return self.__elf.binary[self.E_VERSION]    
+        return binascii.hexlify(str(self.__elf.binary[23:19:-1]))
 
     @property
     def e_entry(self):
-        return "0x" + str(self.__elf.binary[27:23:-1]).encode('hex')
+        return binascii.hexlify(str(self.__elf.binary[27:23:-1]))
 
     @property
     def e_phoff(self):
-        return "0x" + str(self.__elf.binary[31:27:-1]).encode('hex')
+        return binascii.hexlify(str(self.__elf.binary[31:27:-1]))
 
     @property
     def e_shoff(self):
-        return "0x" + str(self.__elf.binary[35:31:-1]).encode('hex')
+        return binascii.hexlify(str(self.__elf.binary[35:31:-1]))
 
     @property
     def e_ehsize(self):
@@ -48,5 +42,23 @@ class Ehdr(object):
     @property
     def e_phentsize(self):
         return binascii.hexlify(str(self.__elf.binary[43:41:-1]))
+    
+    @property
+    def e_phnum(self):
+        return binascii.hexlify(str(self.__elf.binary[45:43:-1]))
+
+    @property
+    def e_shentsize(self):
+        return binascii.hexlify(str(self.__elf.binary[47:45:-1]))
+
+    @property
+    def e_shnum(self):
+        return binascii.hexlify(str(self.__elf.binary[49:47:-1]))
+
+    @property
+    def e_shstrndx(self):
+        return binascii.hexlify(str(self.__elf.binary[51:49:-1]))
+
+
 
 
